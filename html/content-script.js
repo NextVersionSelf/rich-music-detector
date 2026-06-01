@@ -21,6 +21,20 @@ const tab = tabs.find(tb => tb.title?.includes(target)); //find exact match incl
             func: goNextTrack,
         });
     });
+
+    btnPlay.addEventListener("click", () => {
+        chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            func: goPlayTrack,
+        });
+    });
+
+    btnPrev.addEventListener("click", () => {
+        chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            func: goPrevTrack,
+        });
+    });
 });
 
 function goNextTrack() {
@@ -30,4 +44,17 @@ function goNextTrack() {
     };
 };
 
+function goPlayTrack() {
+    const playButton = document.querySelector('ytmusic-player-bar .play-pause-button');
+    if (playButton) {
+        playButton.click();
+    };
+};
+
+function goPrevTrack() {
+    const previousButton = document.querySelector('ytmusic-player-bar .previous-button');
+    if (previousButton) {
+        previousButton.click();
+    };
+};
 
