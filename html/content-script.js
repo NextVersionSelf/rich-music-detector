@@ -10,11 +10,6 @@ chrome.tabs.query({audible: true}, (tabs) => { //Audible T/F
 const target = "YouTube Music"; //Target Window 
 const tab = tabs.find(tb => tb.title?.includes(target)); //find exact match including target
 
-    if (tab) {
-        const tabTitleStr = `Now Playing: ${tab.title}`;
-        songInfo.textContent = tabTitleStr;
-    }
-
     btnNext.addEventListener("click", () => {
         chrome.scripting.executeScript({
             target: { tabId: tab.id },
@@ -36,6 +31,15 @@ const tab = tabs.find(tb => tb.title?.includes(target)); //find exact match incl
         });
     });
 });
+
+chrome.tabs.onUpdated.addListener(handleUpdated);
+
+// Functions here until I figure out how to properly import/inject with the Chrome API
+function handleUpdated(tabId, changeInfo, tabInfo) {
+    const tabTitleStr = `Now Playing: ${tabInfo.title}`;
+    songInfo.textContent = tabTitleStr
+    console.log("Changed attributes: ", changeInfo.title);
+}
 
 function goNextTrack() {
     const nextButton = document.querySelector('ytmusic-player-bar .next-button');
