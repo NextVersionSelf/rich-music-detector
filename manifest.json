@@ -1,0 +1,20 @@
+{
+    "name": "Rich Music Detector",
+    "description": "Music Detection with Discord RP Integration",
+    "version": "1.0",
+    "manifest_version": 3,
+    "permissions": ["tabs", "scripting"],
+    "host_permissions": [
+        "https://music.youtube.com/*"
+    ],
+    "content_scripts": [
+      {
+        "matches": ["https://music.youtube.com/*"],
+        "js": ["html/content-script.js"]
+      }
+    ],
+    "action": {
+        "default_popup": "html/index.html",
+        "default_icon": "assets/icon.png"
+    }
+}
