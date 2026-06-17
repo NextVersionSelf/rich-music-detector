@@ -7,8 +7,10 @@ const songInfo = document.getElementById("song-El");
 //Future Warning: Static elements may break, need mutationobserver at some point 
 
 chrome.tabs.query({audible: true}, (tabs) => { //Audible T/F
-const target = "YouTube Music"; //Target Window 
-const tab = tabs.find(tb => tb.title?.includes(target)); //find exact match including target
+    const target = "YouTube Music"; //Target Window 
+    const tab = tabs.find(tb => tb.title?.includes(target)); //find exact match including target
+    
+    chrome.tabs.onUpdated.addListener(handleUpdated);
 
     btnNext.addEventListener("click", () => {
         chrome.scripting.executeScript({
@@ -30,17 +32,15 @@ const tab = tabs.find(tb => tb.title?.includes(target)); //find exact match incl
             func: goPrevTrack,
         });
     });
-});
 
-chrome.tabs.onUpdated.addListener(handleUpdated);
-
-// Functions here until I figure out how to properly import/inject with the Chrome API
-function handleUpdated(tabId, changeInfo, tabInfo) {
+    function handleUpdated(tabId, changeInfo, tabInfo) {
     const tabTitleStr = `Now Playing: ${tabInfo.title}`;
     songInfo.textContent = tabTitleStr
-    console.log("Changed attributes: ", changeInfo.title);
-}
+    };
+});
 
+
+// Functions here until I figure out how to properly import/inject with the Chrome API
 function goNextTrack() {
     const nextButton = document.querySelector('ytmusic-player-bar .next-button');
     if (nextButton) {
