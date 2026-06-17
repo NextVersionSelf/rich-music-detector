@@ -32,13 +32,7 @@ chrome.tabs.query({audible: true}, (tabs) => { //Audible T/F
             func: goPrevTrack,
         });
     });
-
-    function handleUpdated(tabId, changeInfo, tabInfo) {
-    const tabTitleStr = `Now Playing: ${tabInfo.title}`;
-    songInfo.textContent = tabTitleStr
-    };
 });
-
 
 // Functions here until I figure out how to properly import/inject with the Chrome API
 function goNextTrack() {
@@ -60,5 +54,10 @@ function goPrevTrack() {
     if (previousButton) {
         previousButton.click();
     };
+};
+
+function handleUpdated(tabId, changeInfo, tabInfo) {
+    const tabTitleStr = `Now Playing: ${tabInfo.title}`;
+    songInfo.textContent = tabTitleStr
 };
 
